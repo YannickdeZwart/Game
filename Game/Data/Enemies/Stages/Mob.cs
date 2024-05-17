@@ -1,17 +1,21 @@
 public class Mob : Enemy {
-    private double health;
 
     public Mob(double health) { 
-        this.health = health;
+        base.health = health;
     }
 
     public override void DoDamage(BaseDamage damage)
     {
-        this.health -= damage.getDamage();
+        base.health -= damage.getDamage();
     }
 
     public override bool IsDead()
     {
-        return health <= 0;
+        return base.health <= 0;
+    }
+
+    public override double GetHealth()
+    {
+        return base.health;
     }
 }

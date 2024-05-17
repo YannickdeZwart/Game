@@ -1,5 +1,6 @@
 public abstract class Enemy {
-    private double health;
+    public double health;
     public abstract bool IsDead();
     public abstract void DoDamage(BaseDamage damage);
+    public abstract double GetHealth();
 }

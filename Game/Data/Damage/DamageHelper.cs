@@ -3,4 +3,8 @@ public static class DamageHelper {
         Random random = new();
         return change > random.Next(0, 100);
     }
+
+    public static void DoDamage(BaseDamage damage, Enemy enemy) {
+        enemy.DoDamage(damage);
+    }
 }

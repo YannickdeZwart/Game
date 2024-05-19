@@ -1,3 +1,3 @@
 public abstract class Damage {
-    public abstract double getDamage();
+    public abstract double GetDamage();
 }

@@ -11,7 +11,7 @@ public class BaseDamage : Damage
         this.criticalDamageRate = criticalDamageRate;
     }
 
-    public override double getDamage()
+    public override double GetDamage()
     {
         double calcDamage = 0;
 

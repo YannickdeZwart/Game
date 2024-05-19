@@ -2,11 +2,12 @@ public class Mob : Enemy {
 
     public Mob(double health) { 
         base.health = health;
+        base.defence = new BaseDefence(10);
     }
 
-    public override void DoDamage(BaseDamage damage)
+    public override void Damage(double damage)
     {
-        base.health -= damage.getDamage();
+        base.health -= damage;
     }
 
     public override bool IsDead()

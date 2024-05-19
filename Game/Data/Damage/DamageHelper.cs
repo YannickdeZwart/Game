@@ -5,6 +5,8 @@ public static class DamageHelper {
     }
 
     public static void DoDamage(BaseDamage damage, Enemy enemy) {
-        enemy.DoDamage(damage);
+        double tDamage = DefenceHelper.GetResolveDefence(damage, enemy.defence);
+
+        enemy.Damage(tDamage);
     }
 }

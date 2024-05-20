@@ -1,3 +1,4 @@
 public abstract class Damage {
-    public abstract double GetDamage();
+    public abstract double GetDamage(List<Effect> effects);
+    public abstract List<double> GetEffectStats(List<Effect> effects);
 }

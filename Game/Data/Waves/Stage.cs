@@ -9,7 +9,7 @@ public class Stage {
         this.currentEnemyIndex = 1;
     }
 
-    public bool StageClear()
+    public bool IsStageClear()
     {
         return currentEnemyIndex == enemies.Count + 1;
     }

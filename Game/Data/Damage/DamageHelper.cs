@@ -14,15 +14,24 @@ public static class DamageHelper {
     public static void DoDamage(Character character, Enemy enemy)
     {
         List<Effect> effects = [character.sword.GetEffect()];
-        double defence = DefenceHelper.GetDefence(enemy.defence);
-        double tDamage = character.baseDamage.GetDamage(effects);
+        
+        double tDamage = character.damage.GetDamage(effects);
 
-        tDamage -= defence;
+        tDamage += GetFinalDamage(character.damage.fireDamage, enemy.defence.fireDefence, effects);
+
+        tDamage -= DefenceHelper.GetDefence(enemy.defence); 
 
         if(tDamage < 0) {
             enemy.Damage(0);
         } else {
             enemy.Damage(tDamage);
         }
+    }
+
+    private static double GetFinalDamage(Damage damage, Defence defence, List<Effect> effects)
+    {
+        double finalDamage = damage.GetDamage(effects) - defence.GetDefence();
+
+        return finalDamage > 0 ? finalDamage : 0;
     }
 }

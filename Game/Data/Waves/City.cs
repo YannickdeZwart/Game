@@ -6,9 +6,9 @@ public class City {
         this.currentStageIndex = 1;
     }
 
-    public bool CityClear()
+    public bool IsCityClear()
     {
-        return this.currentStageIndex == this.stages.Count;
+        return this.currentStageIndex == this.stages.Count + 1;
     }
 
     public Stage GetActiveStage()

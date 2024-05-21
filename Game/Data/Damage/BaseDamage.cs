@@ -4,18 +4,20 @@ public class BaseDamage : Damage
     private short criticalRate;
     private double criticalDamageRate;
 
-    public BaseDamage(double damage, short criticalRate, double criticalDamageRate)
+    public FireDamage fireDamage;
+
+    public BaseDamage(double damage, short criticalRate, double criticalDamageRate, FireDamage fireDamage)
     {
         this.damage = damage;
         this.criticalRate = criticalRate;
         this.criticalDamageRate = criticalDamageRate;
+        this.fireDamage = fireDamage;
     }
-
 
     public override double GetDamage(List<Effect> effects)
     {
         List<double> effectsStats = this.GetEffectStats(effects);
-        double damage = this.damage + effectsStats[0];
+        double damage = this.damage + (this.damage / 100 * effectsStats[0]);
         short criticalRate = (short) (this.criticalRate + (short) effectsStats[1]);
         double criticalDamageRate = this.criticalDamageRate + effectsStats[2];
         double calcDamage = 0;

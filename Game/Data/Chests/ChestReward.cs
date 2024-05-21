@@ -1,4 +1,9 @@
 public class ChestReward {
-    private Reward reward;
-    private short change;
+    public Reward reward;
+    public double change;
+
+    public ChestReward(Reward reward, double change) {
+        this.reward = reward;
+        this.change = change;
+    }
 }

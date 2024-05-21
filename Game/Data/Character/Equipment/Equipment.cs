@@ -1,6 +1,6 @@
 public class Equipment {
-    private String name;
-    private Effect effect;
+    public String name;
+    public Effect effect;
 
     public Equipment(String name, Effect effect) {
         this.name = name;

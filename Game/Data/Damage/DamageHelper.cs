@@ -17,7 +17,7 @@ public static class DamageHelper {
         
         double tDamage = character.damage.GetDamage(effects);
 
-        tDamage += GetFinalDamage(character.damage.fireDamage, enemy.defence.fireDefence, effects);
+        tDamage += GetFinalElementDamage(character.damage.fireDamage, enemy.defence.fireDefence, effects);
 
         tDamage -= DefenceHelper.GetDefence(enemy.defence); 
 
@@ -28,7 +28,26 @@ public static class DamageHelper {
         }
     }
 
-    private static double GetFinalDamage(Damage damage, Defence defence, List<Effect> effects)
+        public static void DoSkillDamage(Character character, Skill skill, Enemy enemy)
+    {
+        List<Effect> effects = [character.sword.GetEffect()];
+        
+        double tDamage = character.damage.GetDamage(effects);
+
+        tDamage += GetFinalElementDamage(character.damage.fireDamage, enemy.defence.fireDefence, effects);
+
+        tDamage = Math.Round(tDamage / 100 * skill.effect.damageMultiplier);
+
+        tDamage -= DefenceHelper.GetDefence(enemy.defence); 
+
+        if(tDamage < 0) {
+            enemy.Damage(0);
+        } else {
+            enemy.Damage(tDamage);
+        }
+    }
+
+    private static double GetFinalElementDamage(Damage damage, Defence defence, List<Effect> effects)
     {
         double finalDamage = damage.GetDamage(effects) - defence.GetDefence();
 

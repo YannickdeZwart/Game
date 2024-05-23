@@ -11,6 +11,11 @@ public class City {
         return this.currentStageIndex == this.stages.Count + 1;
     }
 
+    public void AdvanceCity()
+    {
+        this.currentStageIndex++;
+    }
+
     public Stage GetActiveStage()
     {
         return this.stages[this.currentStageIndex - 1];

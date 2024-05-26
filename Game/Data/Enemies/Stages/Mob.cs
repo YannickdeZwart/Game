@@ -1,8 +1,9 @@
 public class Mob : Enemy {
 
-    public Mob(double health, BaseDefence defence) { 
+    public Mob(double health, BaseDefence defence, Reward reward) { 
         base.health = health;
         base.defence = defence;
+        base.reward = reward;
     }
 
     public override void Damage(double damage)

@@ -52,6 +52,27 @@ Chest chest = new EquipmentChest(chestRewards);
 
 BaseDamageUpgrade baseDamageUpgrade= new(5, 80, 1.1);
 
+// heroes
+HeroSkill heroSkill = new();
+
+HeroEffect heroEffect1 = new(critDamageM: 100);
+HeroEffect heroEffect2 = new(critDamageM: 200);
+HeroEffect heroEffect3 = new(critRateE: 10);
+HeroEffect heroEffect4 = new(critRateE: 20);
+HeroEffect heroEffect5 = new(baseAttackM: 100);
+HeroEffect heroEffect6 = new(baseAttackM: 200);
+
+
+Hero hero1 = new(heroEffect1, heroSkill, "Hero 1");
+Hero hero2 = new(heroEffect2, heroSkill, "Hero 2");
+Hero hero3 = new(heroEffect3, heroSkill, "Hero 3");
+Hero hero4 = new(heroEffect4, heroSkill, "Hero 4");
+Hero hero5 = new(heroEffect5, heroSkill, "Hero 5");
+Hero hero6 = new(heroEffect6, heroSkill, "Hero 6");
+
+List<Hero> heroes = new List<Hero>{ hero1, hero2, hero3, hero4, hero5, hero6 };
+character.SetHeroes(heroes);
+
 while(!city.IsCityClear())
 {
     Stage activeStage = city.GetActiveStage();

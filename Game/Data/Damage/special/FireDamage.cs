@@ -7,6 +7,13 @@ public class FireDamage : Damage
     {
         this.damage = damage;
     }
+
+    public override void AddDamage(double amount)
+    {
+        this.damage += amount;
+    }
+
+
     public override double GetDamage(List<Effect> effects)
     {
         return this.damage;

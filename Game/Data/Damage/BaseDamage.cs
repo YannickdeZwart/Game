@@ -45,4 +45,10 @@ public class BaseDamage : Damage
 
         return new List<double>{ damageM, criticalRateE, criticalDamageRateM };
     }
+
+    public override void AddDamage(double amount)
+    {
+        this.damage += amount;
+    }
+
 }

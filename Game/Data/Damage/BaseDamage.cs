@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 public class BaseDamage : Damage
 {
     private double damage;

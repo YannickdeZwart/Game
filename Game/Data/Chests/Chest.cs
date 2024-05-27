@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 public abstract class Chest {
     public List<ChestReward> rewards;
 

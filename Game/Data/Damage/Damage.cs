@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 public abstract class Damage {
     public abstract double GetDamage(List<Effect> effects, List<HeroEffect> heroEffects);
     public abstract List<double> GetEffectStats(List<Effect> effects);

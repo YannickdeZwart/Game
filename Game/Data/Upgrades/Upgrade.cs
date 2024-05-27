@@ -20,5 +20,5 @@ public abstract class Upgrade {
     }
 
     public abstract bool CanUpgrade(Currency currency);
-    public abstract void HandleUpgrade(Character character);
+    public abstract bool HandleUpgrade(Character character);
 }

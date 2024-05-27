@@ -1,4 +1,7 @@
 
+using System;
+using System.Collections.Generic;
+
 public class FireDamage : Damage
 {
     public double damage;

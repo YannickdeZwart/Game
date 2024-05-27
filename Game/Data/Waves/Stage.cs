@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 public class Stage {
     private List<Enemy> enemies = new();
     private int currentEnemyIndex;

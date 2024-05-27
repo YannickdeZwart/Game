@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 public static class DamageHelper {
     public static bool RollHitChange(short change) 
     {
@@ -13,7 +16,7 @@ public static class DamageHelper {
 
     public static void DoDamage(Character character, Enemy enemy)
     {
-        List<Effect> effects = [character.sword.GetEffect()];
+        List<Effect> effects = new List<Effect>{character.sword.GetEffect()};
         List<HeroEffect> heroEffects = character.GetHeroEffects();
         
         double tDamage = character.damage.GetDamage(effects, heroEffects);
@@ -31,7 +34,7 @@ public static class DamageHelper {
 
     public static void DoSkillDamage(Character character, Skill skill, Enemy enemy)
     {
-        List<Effect> effects = [character.sword.GetEffect()];
+        List<Effect> effects = new List<Effect> {character.sword.GetEffect()};
         List<HeroEffect> heroEffects = character.GetHeroEffects();
         
         double tDamage = character.damage.GetDamage(effects, heroEffects);
@@ -51,7 +54,7 @@ public static class DamageHelper {
 
     public static double GetDamage(Character character, Enemy enemy)
     {
-        List<Effect> effects = [character.sword.GetEffect()];
+        List<Effect> effects = new List<Effect> {character.sword.GetEffect()};
         List<HeroEffect> heroEffects = character.GetHeroEffects();
         
         double tDamage = character.damage.GetDamage(effects, heroEffects);

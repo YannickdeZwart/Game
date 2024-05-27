@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 public class City {
     private List<Stage> stages = new();
     private int currentStageIndex;

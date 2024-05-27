@@ -1,9 +1,12 @@
+using System;
+
 public class Mob : Enemy {
 
-    public Mob(double health, BaseDefence defence, Reward reward) { 
+    public Mob(double health, BaseDefence defence, Reward reward, String name) { 
         base.health = health;
         base.defence = defence;
         base.reward = reward;
+        base.name = name;
     }
 
     public override void Damage(double damage)

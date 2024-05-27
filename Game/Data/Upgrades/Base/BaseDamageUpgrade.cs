@@ -7,7 +7,7 @@ public class BaseDamageUpgrade : Upgrade {
         return base.upgradeCost <= currency.coins;
     }
 
-    public override void HandleUpgrade(Character character)
+    public override bool HandleUpgrade(Character character)
     {
         if(this.CanUpgrade(character.currency))
         {
@@ -16,8 +16,10 @@ public class BaseDamageUpgrade : Upgrade {
             base.HandleUpgradeCostMultipliers();
             base.level += 1;
         } else {
-            throw new NoCurrencyException("coins");
+            return false;
         }
+
+        return true;
     }
 
     private void HandleUpgradeCost(Currency currency)

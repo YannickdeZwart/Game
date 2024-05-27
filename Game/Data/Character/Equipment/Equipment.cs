@@ -1,3 +1,5 @@
+using System;
+
 public class Equipment {
     public String name;
     public Effect effect;

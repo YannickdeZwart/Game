@@ -17,10 +17,11 @@ public static class DamageHelper {
     public static void DoDamage(Character character, Enemy enemy)
     {
         List<Effect> effects = new List<Effect>{character.sword.GetEffect()};
+        List<HeroEffect> heroEffects = character.GetHeroEffects();
         
-        double tDamage = character.damage.GetDamage(effects);
+        double tDamage = character.damage.GetDamage(effects, heroEffects);
 
-        tDamage += GetFinalElementDamage(character.damage.fireDamage, enemy.defence.fireDefence, effects);
+        tDamage += GetFinalElementDamage(character.damage.fireDamage, enemy.defence.fireDefence, effects, heroEffects);
 
         tDamage -= DefenceHelper.GetDefence(enemy.defence); 
 
@@ -31,13 +32,14 @@ public static class DamageHelper {
         }
     }
 
-        public static void DoSkillDamage(Character character, Skill skill, Enemy enemy)
+    public static void DoSkillDamage(Character character, Skill skill, Enemy enemy)
     {
         List<Effect> effects = new List<Effect> {character.sword.GetEffect()};
+        List<HeroEffect> heroEffects = character.GetHeroEffects();
         
-        double tDamage = character.damage.GetDamage(effects);
+        double tDamage = character.damage.GetDamage(effects, heroEffects);
 
-        tDamage += GetFinalElementDamage(character.damage.fireDamage, enemy.defence.fireDefence, effects);
+        tDamage += GetFinalElementDamage(character.damage.fireDamage, enemy.defence.fireDefence, effects, heroEffects);
 
         tDamage = Math.Round(tDamage / 100 * skill.effect.damageMultiplier);
 
@@ -50,9 +52,23 @@ public static class DamageHelper {
         }
     }
 
-    private static double GetFinalElementDamage(Damage damage, Defence defence, List<Effect> effects)
+    public static double GetDamage(Character character, Enemy enemy)
     {
-        double finalDamage = damage.GetDamage(effects) - defence.GetDefence();
+        List<Effect> effects = new List<Effect> {character.sword.GetEffect()};
+        List<HeroEffect> heroEffects = character.GetHeroEffects();
+        
+        double tDamage = character.damage.GetDamage(effects, heroEffects);
+
+        tDamage += GetFinalElementDamage(character.damage.fireDamage, enemy.defence.fireDefence, effects, heroEffects);
+
+        tDamage -= DefenceHelper.GetDefence(enemy.defence); 
+
+        return tDamage;
+    }
+
+    private static double GetFinalElementDamage(Damage damage, Defence defence, List<Effect> effects, List<HeroEffect> heroEffects)
+    {
+        double finalDamage = damage.GetDamage(effects, heroEffects) - defence.GetDefence();
 
         return finalDamage > 0 ? finalDamage : 0;
     }

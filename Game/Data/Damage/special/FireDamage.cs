@@ -17,7 +17,7 @@ public class FireDamage : Damage
     }
 
 
-    public override double GetDamage(List<Effect> effects)
+    public override double GetDamage(List<Effect> effects, List<HeroEffect> heroEffects)
     {
         return this.damage;
     }
@@ -26,4 +26,10 @@ public class FireDamage : Damage
     {
         throw new NotImplementedException();
     }
+
+    public override List<double> GetHeroEffectStats(List<HeroEffect> heroEffects)
+    {
+        throw new NotImplementedException();
+    }
+
 }

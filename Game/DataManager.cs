@@ -51,10 +51,14 @@ public class DataManager {
         this.skill = new CutSkill(10, 5, skillEffect);
 
         // chest
+        Effect equipmentRewardEffect = new(baseAttackM: 200000);
+        Equipment equipmentReward = new("Reward equipment 1", equipmentRewardEffect);
+        Equipment equipmentReward2 = new("Reward equipment 2", equipmentRewardEffect);
+
         Reward reward1 = new(coins: 100);
         Reward reward2 = new(coins: 200);
-        Reward reward3 = new(coins: 300);
-        Reward reward4 = new(coins: 400);
+        Reward reward3 = new(equipment: equipmentReward);
+        Reward reward4 = new(equipment: equipmentReward2);
 
 
         List<ChestReward> chestRewards  = new List<ChestReward>
@@ -69,5 +73,11 @@ public class DataManager {
         // upgrade
 
         this.baseDamageUpgrade= new(5, 80, 1.1);
+
+        //inventory
+        Effect effect2 = new Effect(baseAttackM: 400);
+        Equipment equipment = new Equipment("Good sword", effect2);
+        this.character.inventory.equipment.Add(sword);
+        this.character.inventory.equipment.Add(equipment);
     }
 }

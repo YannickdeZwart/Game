@@ -1,7 +1,11 @@
+using System.Collections.Generic;
+
 public class Character {
     public BaseDamage damage;
     public Equipment sword;
     public Currency currency;
+
+    public Inventory inventory;
     private List<Hero> heroes;
 
     public Character(BaseDamage damage, Equipment sword)
@@ -10,6 +14,7 @@ public class Character {
         this.sword = sword;
         this.currency = new(0,0);
         this.heroes = new List<Hero>();
+        this.inventory = new Inventory();
     }
 
     public void AddCoins(double coinAmount)

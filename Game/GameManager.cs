@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,11 @@ public class GameManager : MonoBehaviour
     public Text baseDamageUpgradeCost;
 
     public Text chestRewardText;
+
+    public GameObject inventoryEquipmentPanel;
+    public GameObject inventoryEquipmentTemplate;
+
+    public Text equipedSword;
 
     public City city;
     public Character character;
@@ -29,6 +35,8 @@ public class GameManager : MonoBehaviour
         this.skill = dataManager.skill;
         this.baseDamageUpgrade = dataManager.baseDamageUpgrade;
         this.UpdateBaseDamageUpgradeText(this.baseDamageUpgrade);
+        this.GenerateInventoryEquipment(this.character.inventory);
+        this.equipedSword.text = this.character.sword.name;
     }
     private float time = 0.0f;
     private float updateInterval = 2f;
@@ -72,6 +80,11 @@ public class GameManager : MonoBehaviour
         Reward reward = this.chest.OpenChest();
         RewardHelper.GiveReward(this.character, reward);
         this.FlashRewardText(reward);
+
+        if(reward.equipment != null)
+        {
+            this.GenerateInventoryEquipment(this.character.inventory);
+        }
     }
 
     private void FlashRewardText(Reward reward)
@@ -107,7 +120,7 @@ public class GameManager : MonoBehaviour
 
     private void UpdateBaseDamageUpgradeText(BaseDamageUpgrade baseDamageUpgrade)
     {
-        BaseDamageUpgradeModel baseDamageUpgradeModel = new(baseDamageUpgrade);
+        BaseDamageUpgradeModel baseDamageUpgradeModel = new(baseDamageUpgrade, this.character.damage);
         this.baseDamageUpgradeCost.text = baseDamageUpgradeModel.baseDamageUpgradeCost;
         this.baseDamageUpgradeInfoText.text = baseDamageUpgradeModel.baseDamageUpgradeInfoText;
     }
@@ -133,5 +146,58 @@ public class GameManager : MonoBehaviour
     private void HitFunctions(Enemy activeEnemy)
     {
         DamageHelper.DoDamage(this.character, activeEnemy);
+    }
+
+    private void GenerateInventoryEquipment(Inventory inventory)
+    {
+        this.InventoryEquipmentClear();
+        inventoryEquipmentTemplate.gameObject.SetActive(true);
+        for(int i = 0; i < inventory.equipment.Count; i++)
+        {
+            Equipment equipment = inventory.equipment[i];
+            EffectModel effectModel = new EffectModel(equipment.effect);
+
+            GameObject equipmentItem = Instantiate(this.inventoryEquipmentTemplate, this.inventoryEquipmentPanel.transform);
+            equipmentItem.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = equipment.name;
+            equipmentItem.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = effectModel.effectString;
+
+            Button[] equipButtons = equipmentItem.GetComponentsInChildren<Button>();
+            foreach(Button button in equipButtons)
+            {
+                if(this.InventoryEquipmentIsEquiped(equipment))
+                {
+                    button.interactable = false;
+                } else {
+                    button.onClick.AddListener(() => { InventoryEquipmentEquip(equipment); });
+                }
+            }
+
+        }
+        inventoryEquipmentTemplate.gameObject.SetActive(false);
+    }
+
+    private void InventoryEquipmentClear()
+    {
+        for(int i = 0; i < this.inventoryEquipmentPanel.transform.childCount; i++)
+        {
+            GameObject equipment = this.inventoryEquipmentPanel.transform.GetChild(i).gameObject;
+            if(equipment != inventoryEquipmentTemplate)
+            {
+                Destroy(equipment);
+            }
+            
+        }
+    }
+
+    public void InventoryEquipmentEquip(Equipment equipment)
+    {
+        this.character.sword = equipment;
+        this.GenerateInventoryEquipment(this.character.inventory);
+        this.equipedSword.text = this.character.sword.name;
+    }
+
+    private bool InventoryEquipmentIsEquiped(Equipment equipment)
+    {
+        return this.character.sword == equipment;
     }
 }

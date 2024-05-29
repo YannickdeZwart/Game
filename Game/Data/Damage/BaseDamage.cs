@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 public class BaseDamage : Damage
 {
-    private double damage;
+    public double damage;
     private short criticalRate;
     private double criticalDamageRate;
 

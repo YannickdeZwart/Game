@@ -7,7 +7,10 @@ public static class RewardHelper {
 
     private static void GiveEquipmentReward(Character character, Equipment ?equipment)
     {
-        //
+        if(equipment != null)
+        {
+            character.inventory.equipment.Add(equipment);
+        }    
     }
 
     private static void GiveCoinReward(Character character, double coinAmount)

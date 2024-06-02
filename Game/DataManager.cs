@@ -6,6 +6,7 @@ public class DataManager {
     public Chest chest;
     public Skill skill;
     public BaseDamageUpgrade baseDamageUpgrade;
+    public Banner banner;
 
     public DataManager()
     {
@@ -79,5 +80,37 @@ public class DataManager {
         Equipment equipment = new Equipment("Good sword", effect2);
         this.character.inventory.equipment.Add(sword);
         this.character.inventory.equipment.Add(equipment);
+
+        // banner
+        HeroSkill heroSkill= new();
+        HeroEffect heroEffect = new();
+
+        Hero heror = new Hero(heroEffect, heroSkill, "Hero rare");
+        Hero heroe = new Hero(heroEffect, heroSkill, "Hero epic");
+        Hero herol = new Hero(heroEffect, heroSkill, "Hero legendary");
+        Hero herom = new Hero(heroEffect, heroSkill, "Hero mythical");
+
+        Summon summon1 = new(new(hero: heror), SummonRarity.Rare);
+        Summon summon2 = new(new(coins: 100), SummonRarity.Rare);
+
+        Summon summon3 = new(new(hero: heroe), SummonRarity.Epic);
+        Summon summon4 = new(new(coins: 300), SummonRarity.Epic);
+
+        Summon summon5 = new(new(hero: herol), SummonRarity.Legendary);
+        Summon summon6 = new(new(coins: 500), SummonRarity.Legendary);
+
+        Summon summon7 = new(new(hero: herom), SummonRarity.Mythical);
+        Summon summon8 = new(new(coins: 1000), SummonRarity.Mythical);
+
+        List<Summon> summons = new List<Summon>();
+        summons.Add(summon1);
+        summons.Add(summon2);
+        summons.Add(summon3);
+        summons.Add(summon4);
+        summons.Add(summon5);
+        summons.Add(summon6);
+        summons.Add(summon7);
+        summons.Add(summon8);
+        this.banner = new("Hero Banner", summons, 10, 30, SummonRarity.Legendary, SummonRarity.Mythical);
     }
 }

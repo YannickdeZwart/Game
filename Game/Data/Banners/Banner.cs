@@ -90,7 +90,7 @@ public class Banner {
     {
         if(!IsSummonRarityInPity(lastSummon, this.lowPityRarity))
         {
-            List<Summon> lowPitySummons = this.summons.Where(summon => summon.rarity == pityRarity).ToList(); // is not a valid list
+            List<Summon> lowPitySummons = this.summons.Where(summon => summon.rarity == pityRarity).ToList();
 
             Random random = new();
             int randomIndexInSummons = random.Next(0, lowPitySummons.Count - 1);

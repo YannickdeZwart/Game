@@ -12,7 +12,11 @@ public class RewardModel {
 
         if(reward.coins != null)
         {
-            this.rewardText += reward.coins + "+ Coins";
+            this.rewardText += reward.coins + "+ Coins" + "\n";
+        }
+        if(reward.hero != null)
+        {
+            this.rewardText += "Hero: " + reward.hero.name;
         }
     }
 }

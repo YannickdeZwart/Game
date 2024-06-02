@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -14,7 +15,7 @@ public class GameManager : MonoBehaviour
     public Text baseDamageUpgradeInfoText;
     public Text baseDamageUpgradeCost;
 
-    public Text chestRewardText;
+    public Text bannerRewardText;
 
     public GameObject inventoryEquipmentPanel;
     public GameObject inventoryEquipmentTemplate;
@@ -26,6 +27,9 @@ public class GameManager : MonoBehaviour
     public Chest chest;
     public Skill skill;
     public BaseDamageUpgrade baseDamageUpgrade;
+    public Banner banner;
+    public Text bannerLowPityText;
+    public Text bannerHighPityText;
     void Start()
     {
         DataManager dataManager = new DataManager();
@@ -34,9 +38,11 @@ public class GameManager : MonoBehaviour
         this.chest = dataManager.chest;
         this.skill = dataManager.skill;
         this.baseDamageUpgrade = dataManager.baseDamageUpgrade;
+        this.banner = dataManager.banner;
         this.UpdateBaseDamageUpgradeText(this.baseDamageUpgrade);
         this.GenerateInventoryEquipment(this.character.inventory);
         this.equipedSword.text = this.character.sword.name;
+        this.bannerRewardText.gameObject.SetActive(false);
     }
     private float time = 0.0f;
     private float updateInterval = 2f;
@@ -87,16 +93,44 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void FlashRewardText(Reward reward)
+    public void SummonBanner()
+    {
+        Reward reward = this.banner.SummonBanner();
+        RewardHelper.GiveReward(this.character, reward);
+        this.ShowBannerReward(reward);
+        this.UpdateBannerPityText();
+    }
+
+    private void UpdateBannerPityText()
+    {
+        BannerModel bannerModel = new(this.banner);
+        this.bannerLowPityText.text = bannerModel.lowPityText;
+        this.bannerHighPityText.text = bannerModel.highPityText;
+    }
+
+    private void ShowBannerReward(Reward reward)
     {
         RewardModel rewardModel = new(reward);
-        this.chestRewardText.text = rewardModel.rewardText;
-        Invoke("ResetRewardText", 8f);
+        this.bannerRewardText.text = rewardModel.rewardText;
+        this.bannerRewardText.gameObject.SetActive(true);
+        Invoke("HideBannerReward", 5f);
+    }
+
+    private void HideBannerReward()
+    {
+        this.bannerRewardText.gameObject.SetActive(false);
+    }
+
+    private void FlashRewardText(Reward reward)
+    {
+        // RewardModel rewardModel = new(reward);
+        // this.chestRewardText.text = rewardModel.rewardText;
+        // Invoke("ResetRewardText", 8f);
     }
 
     private void ResetRewardText()
     {
-        this.chestRewardText.text = "";
+        // this.chestRewardText.text = "";
     }
 
     public void UseSkill()

@@ -30,6 +30,18 @@ public class GameManager : MonoBehaviour
     public Banner banner;
     public Text bannerLowPityText;
     public Text bannerHighPityText;
+
+    public Canvas upgradeMenuCanvas;
+    public Canvas inventoryMenuCanvas;
+    public Canvas bannerMenuCanvas;
+    public Canvas chestMenuCanvas;
+
+    public Button upgradeMenuButton;
+    public Button inventoryMenuButton;
+    public Button bannerMenuButton;
+    public Button chestMenuButton;
+
+    public Menus menus;
     void Start()
     {
         DataManager dataManager = new DataManager();
@@ -43,6 +55,16 @@ public class GameManager : MonoBehaviour
         this.GenerateInventoryEquipment(this.character.inventory);
         this.equipedSword.text = this.character.sword.name;
         this.bannerRewardText.gameObject.SetActive(false);
+        this.menus = new Menus(
+            upgradeMenuCanvas: upgradeMenuCanvas,
+            bannerMenuCanvas: bannerMenuCanvas,
+            inventoryMenuCanvas: inventoryMenuCanvas,
+            chestMenuCanvas: chestMenuCanvas,
+            upgradeMenuButton: upgradeMenuButton,
+            bannerMenuButton: bannerMenuButton,
+            inventoryMenuButton: inventoryMenuButton,
+            chestMenuButton: chestMenuButton
+        );
     }
     private float time = 0.0f;
     private float updateInterval = 2f;
@@ -78,6 +100,26 @@ public class GameManager : MonoBehaviour
             }
 
             UpdateFunctions(activeEnemy);
+        }
+    }
+
+    public void ToggleMenuByName(string name)
+    {
+        this.menus.ResetMenus(name);
+        switch(name)
+        {
+            case "upgrade":
+                this.menus.upgradeMenu.Toggle();
+                break;
+            case "banner":
+                this.menus.bannerMenu.Toggle();
+                break;
+            case "inventory":
+                this.menus.inventoryMenu.Toggle();
+                break;
+            case "chest":
+                this.menus.chestMenu.Toggle();
+                break;
         }
     }
 

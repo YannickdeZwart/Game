@@ -20,8 +20,6 @@ public class GameManager : MonoBehaviour
     public GameObject inventoryEquipmentPanel;
     public GameObject inventoryEquipmentTemplate;
 
-    public Text equipedSword;
-
     public City city;
     public Character character;
     public Chest chest;
@@ -41,7 +39,13 @@ public class GameManager : MonoBehaviour
     public Button bannerMenuButton;
     public Button chestMenuButton;
 
+    public Text selectedWeaponname;
+    public Text selectedWeaponrarity;
+    public Text selectedWeaponeffects;
+    public Button selectedWeaponEquipButton;
+
     public Menus menus;
+    public Equipment selectedEquipment;
     void Start()
     {
         DataManager dataManager = new DataManager();
@@ -53,7 +57,6 @@ public class GameManager : MonoBehaviour
         this.banner = dataManager.banner;
         this.UpdateBaseDamageUpgradeText(this.baseDamageUpgrade);
         this.GenerateInventoryEquipment(this.character.inventory);
-        this.equipedSword.text = this.character.sword.name;
         this.bannerRewardText.gameObject.SetActive(false);
         this.menus = new Menus(
             upgradeMenuCanvas: upgradeMenuCanvas,
@@ -65,6 +68,8 @@ public class GameManager : MonoBehaviour
             inventoryMenuButton: inventoryMenuButton,
             chestMenuButton: chestMenuButton
         );
+        this.selectedEquipment = this.character.sword;
+        this.SelectEquipment(this.selectedEquipment);
     }
     private float time = 0.0f;
     private float updateInterval = 2f;
@@ -228,28 +233,47 @@ public class GameManager : MonoBehaviour
     {
         this.InventoryEquipmentClear();
         inventoryEquipmentTemplate.gameObject.SetActive(true);
-        for(int i = 0; i < inventory.equipment.Count; i++)
+        foreach(Equipment equipment in inventory.equipment)
         {
-            Equipment equipment = inventory.equipment[i];
             EffectModel effectModel = new EffectModel(equipment.effect);
 
             GameObject equipmentItem = Instantiate(this.inventoryEquipmentTemplate, this.inventoryEquipmentPanel.transform);
             equipmentItem.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = equipment.name;
             equipmentItem.transform.GetChild(0).GetChild(1).GetComponent<Text>().text = effectModel.effectString;
 
-            Button[] equipButtons = equipmentItem.GetComponentsInChildren<Button>();
-            foreach(Button button in equipButtons)
-            {
-                if(this.InventoryEquipmentIsEquiped(equipment))
-                {
-                    button.interactable = false;
-                } else {
-                    button.onClick.AddListener(() => { InventoryEquipmentEquip(equipment); });
-                }
-            }
-
+            Button selectButton = equipmentItem.GetComponentsInChildren<Button>()[0];
+            selectButton.onClick.AddListener(() => { SelectEquipment(equipment); });
         }
         inventoryEquipmentTemplate.gameObject.SetActive(false);
+    }
+
+    public void SelectEquipment(Equipment equipment)
+    {
+        if(equipment == this.selectedEquipment)
+        {
+            equipment = this.character.sword;
+        }
+        SelectedEquipmentModel selectedEquipmentModel = new(equipment);
+        this.selectedWeaponeffects.text = selectedEquipmentModel.effects;
+        this.selectedWeaponname.text = selectedEquipmentModel.name;
+        this.selectedWeaponrarity.text = selectedEquipmentModel.rarity;
+        this.selectedEquipment = equipment;
+
+        this.UpdateSelectedWeaponEquipButton(equipment);
+    }
+
+    private void UpdateSelectedWeaponEquipButton(Equipment equipment)
+    {
+        if(!this.InventoryEquipmentIsEquiped(equipment))
+        {
+            this.selectedWeaponEquipButton.enabled = true;
+            this.selectedWeaponEquipButton.gameObject.transform.GetChild(0).GetComponent<Text>().text = "Equip";
+        }
+        else
+        {
+            this.selectedWeaponEquipButton.enabled = false;
+            this.selectedWeaponEquipButton.gameObject.transform.GetChild(0).GetComponent<Text>().text = "Already equiped";
+        }
     }
 
     private void InventoryEquipmentClear()
@@ -265,15 +289,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void InventoryEquipmentEquip(Equipment equipment)
+    public void InventoryEquipmentEquip()
     {
-        this.character.sword = equipment;
-        this.GenerateInventoryEquipment(this.character.inventory);
-        this.equipedSword.text = this.character.sword.name;
+        this.character.sword = this.selectedEquipment;
+        this.UpdateSelectedWeaponEquipButton(this.selectedEquipment);
     }
 
     private bool InventoryEquipmentIsEquiped(Equipment equipment)
     {
-        return this.character.sword == equipment;
+        return  this.character.sword.GetHashCode() == equipment.GetHashCode();
     }
 }

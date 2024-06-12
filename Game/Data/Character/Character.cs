@@ -36,4 +36,24 @@ public class Character {
         }
         return heroEffects;
     }
+
+    public double GetHerosDamage()
+    {
+        double damage = 0;
+        foreach (Hero hero in this.heroes)
+        {
+            damage += hero.GetStatsForLevel().getDamage();
+        }
+        return damage;
+    }
+
+    public void GiveHeroShards(HeroReward heroReward)
+    {
+        Hero hero = this.heroes.Find(heroReward.hero);
+
+        if (hero != null)
+        {
+            hero.shards += heroReward.shards;
+        }
+    }
 }

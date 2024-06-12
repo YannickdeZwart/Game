@@ -90,16 +90,16 @@ public class DataManager {
         Hero herol = new Hero(heroEffect, heroSkill, "Hero legendary");
         Hero herom = new Hero(heroEffect, heroSkill, "Hero mythical");
 
-        Summon summon1 = new(new(hero: heror), SummonRarity.Rare);
+        Summon summon1 = new(new(heroReward: new HeroReward(heror, 10)), SummonRarity.Rare);
         Summon summon2 = new(new(coins: 100), SummonRarity.Rare);
 
-        Summon summon3 = new(new(hero: heroe), SummonRarity.Epic);
+        Summon summon3 = new(new(heroReward: new HeroReward(heroe, 10)), SummonRarity.Epic);
         Summon summon4 = new(new(coins: 300), SummonRarity.Epic);
 
-        Summon summon5 = new(new(hero: herol), SummonRarity.Legendary);
+        Summon summon5 = new(new(heroReward: new HeroReward(herol, 10)), SummonRarity.Legendary);
         Summon summon6 = new(new(coins: 500), SummonRarity.Legendary);
 
-        Summon summon7 = new(new(hero: herom), SummonRarity.Mythical);
+        Summon summon7 = new(new(heroReward: new HeroReward(herom, 10)), SummonRarity.Mythical);
         Summon summon8 = new(new(coins: 1000), SummonRarity.Mythical);
 
         List<Summon> summons = new List<Summon>();

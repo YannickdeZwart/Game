@@ -3,6 +3,7 @@ public static class RewardHelper {
     {
         GiveEquipmentReward(character, reward.equipment);
         GiveCoinReward(character, reward.coins ?? 0);
+        GiveHeroShardsReward(character, reward.hero);
     }
 
     private static void GiveEquipmentReward(Character character, Equipment ?equipment)
@@ -16,5 +17,13 @@ public static class RewardHelper {
     private static void GiveCoinReward(Character character, double coinAmount)
     {
         character.AddCoins(coinAmount);
+    }
+
+    private static void GiveHeroShardsReward(Character character, HeroReward ?heroReward)
+    {
+        if(heroReward != null)
+        {
+            character.GiveHeroShards(heroReward);
+        }
     }
 }

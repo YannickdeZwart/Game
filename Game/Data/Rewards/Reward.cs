@@ -1,11 +1,11 @@
 public class Reward {
     public double? coins;
     public Equipment? equipment;
-    public Hero? hero;
+    public HeroReward? heroReward;
 
-    public Reward(double? coins = null, Equipment? equipment = null, Hero? hero = null) {
+    public Reward(double? coins = null, Equipment? equipment = null, HeroReward? heroReward = null) {
         this.coins = coins;
         this.equipment = equipment;
-        this.hero = hero;
+        this.heroReward = heroReward;
     }
 }

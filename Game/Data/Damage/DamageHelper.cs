@@ -21,6 +21,10 @@ public static class DamageHelper {
         
         double tDamage = character.damage.GetDamage(effects, heroEffects);
 
+        // hero damage
+        tDamage = character.GetHerosDamage();
+
+        // fire damage
         tDamage += GetFinalElementDamage(character.damage.fireDamage, enemy.defence.fireDefence, effects, heroEffects);
 
         tDamage -= DefenceHelper.GetDefence(enemy.defence); 
